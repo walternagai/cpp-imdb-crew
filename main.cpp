@@ -1,20 +1,28 @@
 #include <iostream>
 using namespace std;
 
-const int MAX_MOVIES = 5;
-const int MAX_OPINIONS = 6;
-const int OPINIONS = 5;
-const int MAX_CHARS = 81;
+const int MAX_CHARS    = 81;
+const int MAX_MOVIES   = 5;
+const int MAX_CAST     = 3;
+const int MOVIE_NOT_FOUND = -1;
+
+typedef char text[MAX_CHARS];
+
+struct Cast {
+  text actors[MAX_CAST];
+};
+
+struct Crew {
+  int idMovie;
+  text director;
+  Cast cast;
+};
 
 struct Movie {
   int idMovie;
-  char title[MAX_CHARS];
+  text title;
   int year;
-};
-
-struct Opinions {
-  int idMovie;
-  int stars[MAX_OPINIONS];
+  Crew crew;
 };
 
 void printMovie (Movie movie) {
@@ -22,23 +30,33 @@ void printMovie (Movie movie) {
        << movie.title;
 }
 
-float calculateStars (Opinions opinions[], int idMovie) {
-  float meanStars = 0;
+int searchMovie (Movie movies[MAX_MOVIES], int idMovie) {
+  for (int i = 0; i < MAX_MOVIES; i++)
+    if (movies[i].idMovie == idMovie)
+      return i;
+  return MOVIE_NOT_FOUND;
+} 
 
-  /*
-    PARA cada posição do vetor opinions EXECUTE
-      SE opinions[i].idMovie == idMovie ENTÃO
-        PARA cada posição do vetor opinions[i].star EXECUTE
-          some cada uma das "estrelas" de opinions[i].star[s]
-        FIM-PARA
-      FIM-SE
-    FIM-PARA
+void printCrew (Crew crew) {
+  cout << "\tDirector: ";
+  /* 
+    IMPRIME o nome do diretor do filme
   */
-
-  return meanStars / MAX_OPINIONS;
+  cout << endl;
+  cout << "\tCast: ";
+  for (int j = 0; j < MAX_CAST; j++) {
+    /*
+      IMPRIME o j-ésimo ator da estrutura cast dentro da variável crew
+    */
+    cout << " ";
+  }
 }
 
 int main() {
+  int positionMovie;
+  Movie movie;
+  Crew crew;
+
   Movie movies[MAX_MOVIES] = {
     { 101, "Star Wars - Nova Esperanca: Episodio 4", 1977 },
     { 102, "Star Wars - O Imperio Contra-Ataca: Episodio 5", 1980 },
@@ -47,17 +65,30 @@ int main() {
     { 202, "Pulp Fiction", 1994 }
   };
 
-  Opinions opinions[OPINIONS] = {
-    { 101, { 3, 4, 5, 5, 5, 5 } },
-    { 201, { 4, 4, 5, 4, 5, 5 } },
-    { 102, { 4, 4, 3, 5, 5, 3 } },
-    { 202, { 4, 4, 3, 5, 5, 3 } },
-    { 103, { 4, 3, 4, 5, 5, 3 } }
+  Cast casts[MAX_MOVIES] = {
+    { "Mark Hamill", "Harrison Ford", "Carrie Fisher" },
+    { "Mark Hamill", "Harrison Ford", "Billie Dee Williams" },
+    { "Mark Hamill", "Alec Guinness", "Carrie Fisher" },
+    { "Tim Robbins", "Morgan Freeman", "Bob Gunton" },
+    { "John Travolta", "Samuel L. Jackson", "Uma Thurman" }
+  };
+
+  Crew crews[MAX_MOVIES] = {
+    { 202, "Quentin Tarantino", casts[4] },
+    { 201, "Frank Darabont", casts[3] },
+    { 103, "George Lucas", casts[2] },
+    { 102, "George Lucas", casts[1] },
+    { 101, "George Lucas", casts[0] }
   };
 
   for (int i = 0; i < MAX_MOVIES; i++) {
-    printMovie (movies[i]);
-    cout << " had " << calculateStars (opinions, movies[i].idMovie) << " stars\n"; 
+    positionMovie = searchMovie(movies, crews[i].idMovie);
+    movie = movies[positionMovie];
+    printMovie (movie);
+    cout << endl;
+    crew = crews[i];
+    printCrew (crew);
+    cout << endl;
   }
 
   return 0;
