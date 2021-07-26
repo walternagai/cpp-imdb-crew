@@ -40,7 +40,7 @@ int searchMovie (Movie movies[MAX_MOVIES], int idMovie) {
 void printCrew (Crew crew) {
   cout << "Director: ";
   /* 
-    IMPRIME o nome do diretor do filme
+    IMPRIME o nome do diretor dentro da variável crew
   */
   cout << endl;
   cout << "Cast: ";
