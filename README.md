@@ -2,7 +2,7 @@
 
 O [IMDB](https://www.imdb.com/) é um conhecido serviço Web que cataloga filmes e classifica em estrelas quanto a percepção de seus usuários.
 
-O programa cpp-imdb-crew tem duas estruturas (registros) bem distintas:
+O programa cpp-imdb-crew tem três estruturas (registros) bem distintas:
 * **Movie** - estrutura tem quatro campos: idMovie (número único de identificação de um filme), title (título do filme), year (ano de lançamento do filme) e crew (diretor e elenco do filme);
 * **Crew** - estrutura com três campos: idMovie (o mesmo número único de identificação de um filme da estrutura Movie), director (diretor do filme) e cast (elenco do filme).
 * **Cast** - estrutura com um único campo: actors (nomes de atores/atrizes do elenco).
